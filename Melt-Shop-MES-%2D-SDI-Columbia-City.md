@@ -1,7 +1,7 @@
 [Fluxes](Fluxes)
 [Chemistry Residuals](/Residuals)
-[Slag Calculation](SlagCalculation)
-[EAF Event Generation](DMTEvents)
+[Slag Calculation](/Slag-Calculation)
+[EAF Event Generation](/EAF-Event-Generation)
 [Ladle Equipment / Components ](LadleComponents)
 [EAF Equipment / Components](EAFComponents)
 
