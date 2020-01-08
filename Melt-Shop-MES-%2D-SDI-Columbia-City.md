@@ -4,10 +4,10 @@
 [EAF Event Generation](/EAF-Event-Generation)
 [Ladle Equipment / Components ](/Ladle-Equipment)
 [EAF Equipment / Components](/EAF-Equipment)
-[EAF Consumption](/)
-[Scrap Materials](/)
-[Electrode Changes](/)
-[User Roles](/)
+[EAF Consumption](/EAF-Consumptions)
+[Scrap Materials](/Scrap-Materials)
+[Electrode Changes](/EAF-Electrode-Changes)
+[User Roles](/4i-User-Roles)
 
 
 
