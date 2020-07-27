@@ -9,12 +9,9 @@ Authorization: The method used to assign different permissions to operate the sy
 4i uses the underlying SQL Server authentication. SQL Server has two different methods to authenticate logins:  Active Directory (AD) and  SQL Authentication. Both methods can be used in 4i.
 
 ###Active Directory
-When a user opens the website, 
-- if the computer is already logged into the AD
-- and the user logged in the computer is created in MES (SQL Server Login exists / IHBoxSystem database user exists)
-- and the user has proper permissions to enter the site (belongs to a profile with _Public_ permission)
+When a user opens the website, a login dialog opens, the user is prompted for a username and password
+The combination is sent to AD for its validation, if it is valid the website is opened.
 
-Then the MES website allows the user to bypass entering the username/password
 
 ###SQL Authentication
 When a user opens the website, a login dialog opens, the user is prompted for a username and password
@@ -45,3 +42,24 @@ The Users Configuration screens are used to create users and assign profiles to 
 
 The Profiles Configuration screen is used to assign modules/actions to profiles
 ![image.png](/.attachments/image-d052804e-3f61-41e7-adfb-e74191702b63.png)
+
+
+#Internal Workings
+
+##When a user is created using the web app 
+
+- A SQLServer Login is created in SQL Server. This login is always of SQL User type (not windows user), if the user created is a Domain user, the login name is created by changing the backslash for a forwardslash ie. 
+domain\jsmith => domain/jsmith
+
+- A database user is created in IHBoxSystem database pointing to the newly created login
+- Some standard roles are assigned to the database user  
+
+##When a profile is changed by adding/removing permissions in the web app
+- The permissions (actually database roles) are written in the "module actions" table
+
+##When a user is assigned/deassigned to a profile in the web app
+- The system reviews the database roles that the profile has and assign those roles to the database user
+
+
+
+
