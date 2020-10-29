@@ -12,7 +12,6 @@ Authorization: The method used to assign different permissions to operate the sy
 When a user opens the website, a login dialog opens, the user is prompted for a username and password
 The combination is sent to AD for its validation, if it is valid the website is opened.
 
-
 ###SQL Authentication
 When a user opens the website, a login dialog opens, the user is prompted for a username and password
 The combination is sent to SQL Server for its validation, if it is valid the website is opened.
@@ -48,11 +47,23 @@ The Profiles Configuration screen is used to assign modules/actions to profiles
 
 ##When a user is created using the web app 
 
-- A SQLServer Login is created in SQL Server. This login is always of SQL User type (not windows user), if the user created is a Domain user, the login name is created by changing the backslash for a forwardslash ie. 
-domain\jsmith => domain/jsmith
+- A SQLServer Login is created in SQL Server. This login is always of SQL User type (not windows user)
 
-- A database user is created in IHBoxSystem database pointing to the newly created login
+- if the user created is a Domain user, the login name is created by changing the backslash for a forwardslash ie. 
+domain\jsmith => domain/jsmith, we will call this login name _shadow login_ . The password for this login is randomly generated and then stored in the column PasswordHash in IHBoxSystem.CAT.Users
+
+- A database user is created in IHBoxSystem database pointing to the newly created login 
+
 - Some standard roles are assigned to the database user  
+
+## When a user tries to login 
+There are two different pages for login: Login and Domain Login
+
+If the user logs in using standard login:
+Username and passwords are applied to a connection string (APP) in IndustrialDashboard web.config, a connection is attempted and if it works (basically SQL Server has a Login with that name and password), a long sql statement is called to retrieve the user's permissions. 
+
+For domain users, the username and password are authenticated with the Domain Controller and if that succeds, the username is transformed into a SQL Login username by changing the \ into a / , then the password is retrieved from the CAT.Users table and then it follows the same logic as the standard login
+
 
 ##When a profile is changed by adding/removing permissions in the web app
 - The permissions (actually database roles) are written in the "module actions" table
